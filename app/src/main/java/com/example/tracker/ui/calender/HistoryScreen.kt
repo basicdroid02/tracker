@@ -40,9 +40,8 @@ fun HistoryScreen(
     val allPeriods by viewModel.allPeriods.collectAsState(initial = emptyList())
     val editingPeriod = viewModel.editingPeriod
 
-    val monthYearFormat = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
     val dayFormat = SimpleDateFormat("dd", Locale.getDefault())
-    val dayNameFormat = SimpleDateFormat("EEE", Locale.getDefault())
+    val monthFormat = SimpleDateFormat("MMM", Locale.getDefault())
 
     val scrollState = rememberScrollState()
     val context = LocalContext.current
@@ -69,6 +68,13 @@ fun HistoryScreen(
                 )
             },
             actions = {
+                IconButton(
+                    onClick = { exportHistory(context, allPeriods) },
+                    enabled = allPeriods.isNotEmpty()
+                ) {
+                    Icon(Icons.Default.Share, contentDescription = null, tint = signaturePink)
+                }
+
                 if (isSelectionMode) {
                     IconButton(onClick = {
                         selectedPeriods.forEach { viewModel.deletePeriod(it) }
@@ -77,11 +83,6 @@ fun HistoryScreen(
                         Icon(Icons.Default.Delete, contentDescription = null, tint = Color.Red)
                     }
 
-                    IconButton(onClick = {
-                        exportHistory(context, allPeriods)
-                    }) {
-                        Icon(Icons.Default.Share, contentDescription = null, tint = signaturePink)
-                    }
 
                     IconButton(onClick = {
                         isSelectionMode = false
@@ -169,7 +170,7 @@ fun HistoryScreen(
                                 fontWeight = FontWeight.ExtraBold
                             )
                             Text(
-                                dayNameFormat.format(startDate).uppercase(),
+                                monthFormat.format(startDate).uppercase(Locale.getDefault()),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = Color.LightGray
                             )
@@ -347,7 +348,7 @@ fun exportHistory(context: Context, periods: List<PeriodEntity>) {
 
         context.startActivity(Intent.createChooser(intent, "Download History"))
 
-    } catch (e: Exception) {
+    } catch (_: Exception) {
         Toast.makeText(
             context,
             "Export failed",

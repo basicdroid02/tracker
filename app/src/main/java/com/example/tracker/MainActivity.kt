@@ -22,8 +22,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModelStore
-
 import com.example.tracker.ui.calender.AboutScreen
 import com.example.tracker.ui.calender.HelpScreen
 import com.example.tracker.ui.calender.HistoryScreen
@@ -78,6 +76,7 @@ class MainActivity : ComponentActivity() {
                                 label = { Text("History") },
                                 selected = currentScreen == "history",
                                 onClick = {
+                                    viewModel.cancelEditing()
                                     currentScreen = "history"
                                     scope.launch { drawerState.close() }
                                 }

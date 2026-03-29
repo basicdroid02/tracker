@@ -8,12 +8,12 @@ plugins {
 android {
     namespace = "com.example.tracker"
 
-    compileSdk = 36
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.tracker"
         minSdk = 24
-        targetSdk = 36
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -36,9 +36,9 @@ android {
         targetCompatibility = JavaVersion.VERSION_11
     }
 
-//    kotlinOptions {
-//        jvmTarget = "11"
-//    }
+    kotlinOptions {
+        jvmTarget = "11"
+    }
 
     buildFeatures {
         compose = true
@@ -63,6 +63,7 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     implementation(platform(libs.androidx.compose.bom))
 
